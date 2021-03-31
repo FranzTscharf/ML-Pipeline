@@ -1,0 +1,24 @@
+item {
+  id: 1
+  name: 'type'
+}
+
+item {
+  id: 2
+  name: 'identification'
+}
+
+item {
+  id: 3
+  name: 'customer'
+}
+
+item {
+  id: 4
+  name: 'content'
+}
+
+item {
+  id: 5
+  name: 'header'
+}

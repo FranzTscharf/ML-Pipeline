@@ -1,0 +1,104 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+
+
+
+.labelText{
+  fill: #f0506e;
+  font-size: 14;
+}
+#svgWrapper{
+  font-family: 'Lato';
+  margin: 0;
+  overflow: hidden;
+}
+.handle{
+  fill: grey;
+  fill-opacity: 0.1;
+  cursor: move;
+  stroke-dasharray: 5;
+  stroke: grey;
+  r: 10;
+}
+
+.bottomright{
+  cursor: move;
+}
+.topleft{
+  cursor: move;
+}
+.topright{
+  fill: #fff;
+  fill-opacity: 1;
+  stroke-dasharray: 0;
+  stroke: #f0506e;
+  r: 10;
+}
+.resizing {
+  fill: blue;
+}
+
+.moving {
+  fill: transparent;
+}
+
+#controls {
+  position: absolute;
+  top: 0;
+}
+
+#controls input {
+  width: 3em;
+}
+
+:root {
+  --accent-color: #f0506e;
+}
+#svgID{
+  height: 100%;
+  width: 100%;
+}
+
+#documentPicture{
+  max-height: 92vh;
+}
+
+.annotation path {
+  stroke: var(--accent-color);
+  fill: none;
+}
+
+text.title {
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+.img-overlay-wrap {
+  position: relative;
+  display: inline-block; /* <= shrinks container to image size */
+  transition: transform 150ms ease-in-out;
+}
+
+.img-overlay-wrap img { /* <= optional, for responsiveness */
+  /* display: block; */
+  max-width: 100%;
+  height: auto;
+}
+
+.img-overlay-wrap svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+}

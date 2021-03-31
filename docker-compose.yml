@@ -1,0 +1,96 @@
+version: '3'
+
+services:
+   frontend:
+     container_name: frontend
+     image: frontend
+     build: ./dockerfiles/frontend/
+     command: serve -s /tensorflow/workspace/frontend/build/ -p 8080
+     volumes:
+       - ./workspace/:/tensorflow/workspace/
+     networks:
+            tensorflow_net:
+                ipv4_address: 172.28.1.7
+     restart:
+      on-failure
+     ports:
+       - "8080:8080"
+   serving:
+     container_name: serving
+     image: tensorflow/serving:latest-devel
+     command: tensorflow_model_server --model_base_path=/models/object-detect --rest_api_port=8082 --port=8081
+     volumes:
+       - ./workspace/serving/saved_models/:/models/object-detect/
+     networks:
+            tensorflow_net:
+                ipv4_address: 172.28.1.3
+     restart:
+      on-failure
+     ports:
+       - "8082:8082" # tf_serving rest api endpoint
+       - "8081:8081" # tf_serving rpc endpoint
+   gateway:
+     container_name: gateway
+     image: gateway
+     build: ./dockerfiles/gateway/
+     command: python3 /tensorflow/workspace/gateway/main.py run
+     #command: bash
+     stdin_open: true
+     restart:
+      on-failure
+     tty: true
+     volumes:
+       - ./workspace/:/tensorflow/workspace/
+     ports:
+       - "8888:8888" #jupyther notebook
+       - "5000:5000" #swagger ui
+     networks:
+        tensorflow_net:
+                ipv4_address: 172.28.1.4
+   pipeline:
+     container_name: pipeline
+     image: tensorflow/pipeline
+     build: ./dockerfiles/pipeline/
+     command: "bash -c 'airflow webserver -p 8090 & airflow scheduler'"
+     stdin_open: true
+     tty: true
+     restart:
+      on-failure
+     volumes:
+       - ./workspace/:/tensorflow/workspace/
+     ports:
+       - "8899:8899" #Jupyter notebook
+       - "8090:8090" #AirFlow webserver
+       - "6006:6006" #TensorBoard
+     networks:
+        tensorflow_net:
+                ipv4_address: 172.28.1.5
+   tesseract:
+     container_name: ocr
+     image: tesseract_ocr
+     build: ./dockerfiles/ocr/
+     command: python3 /tensorflow/workspace/ocr/main.py run
+     stdin_open: true
+     tty: true
+     restart:
+      on-failure
+     volumes:
+       - ./workspace/:/tensorflow/workspace/
+     ports:
+       - "7000:7000"
+     networks:
+        tensorflow_net:
+                ipv4_address: 172.28.1.6
+networks:
+  tensorflow_net:
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.28.0.0/16
+
+
+#  default:
+#    external: d
+#      name: my-pre-existing-network
+#volumes:
+#    db_data:
