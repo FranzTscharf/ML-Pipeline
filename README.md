@@ -36,7 +36,7 @@ docker-compose up
 After the completion the services should be up and running.
 
 ### Architectur
-![Architectur](https://i.imgur.com/I1gVQaSr.png)
+![Architectur](https://i.ibb.co/Svc0kgy/Untitled-Diagram-drawio-24-page-0001.jpg)
 
 ## Advanced Single Mode without container
 ### Setup
