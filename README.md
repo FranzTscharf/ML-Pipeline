@@ -1,4 +1,4 @@
-# MLaaS Pipeline
+# Clinical Document Classification MLaaS Pipeline
 
 This Project is a part of the paper from Viktor Walter-Tscharf. The ouline of this repo is to make a PoC for clustering and classifying documents.
 
